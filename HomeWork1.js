@@ -42,6 +42,7 @@ const clients = [
 //make a list of my clients with "map"
 const names = clients.map(c => c.name);
 console.log('list of clients:', names);
+console.log("\n");
 
 //with "filter" i just only the data from some criteria
 //here i selected clients which will buy more than 2 products
@@ -51,7 +52,7 @@ console.log("\n");
 
 //with reduce, from multiple values/array , can be put in one value, like sums
 const totalRevenue = clients.reduce((sum, c) => sum + c.sum, 0);
-console.log('total revenue from purchases is', totalRevenue); // 670
+console.log('total revenue from purchases is', totalRevenue); 
 console.log("\n");
 
 //print in console every client about purchases-> "forEach"
@@ -78,20 +79,50 @@ console.log("\n");
 
 //1.2 var - let - const -> declaring variables
 
-//redeclaration & reassignation
-var x = 10;
-var x = 20; 
-x = 30;     
-console.log(x)
+//not redeclaration & not reassignment -> intern modified
+const client = {
+  name: 'Nastase Diana',
+  nrProd: 2,
+  sum: 100,
+  address: {
+    city: 'Oradea',
+    nr: 32
+  }
+};
 
-//not redeclaration , but reassignation
-let y = 5;
-y = 7;       
-console.log(y); 
+//test if can modify data inside object
+client.sum = 150;
+client.address.city = 'Bucuresti';
 
-//not redeclaration & reassignation
-const z = 100;
-console.log(z); 
+console.log('updated info for', client);
+console.log("\n");
+
+//not redeclaration, but reassignment
+let discount = 0;
+
+if (client.sum > 100) {
+  let discount = 10; //block scoped, different variable
+  console.log('inside of cond =', discount); 
+}
+
+console.log('outside of cond =', discount); 
+//test if can be reassigned
+discount = 15;
+console.log('after reassignment of discount =', discount); 
+console.log("\n");
+
+//redeclaration & reassignment
+var clientNameTest = 'Dobre Mihai';
+
+if (true) {
+  var clientNameTest = 'Ionescu Ana'; 
+  console.log('inside of if is', clientNameTest); 
+}
+
+console.log('outside of if is', clientNameTest); 
+//test redeclaration
+var clientNameTest = 'Mircea Elena';
+console.log('after redeclaration:', clientNameTest);
 console.log("\n");
 
 //1.3 spread op
@@ -138,7 +169,6 @@ function calcTotal(...sums) {
 }
 //take all the sums from each client
 const sums = clients.map(client => client.sum);
-
 //final sum
 const totalSum = calcTotal(...sums);
 console.log('new sum is', totalSum);
@@ -176,7 +206,7 @@ for (let key in origClient) {
     console.log(`${key}: ${value}`);
   }
 }
-console.log('\n');
+console.log("\n"); 
 
 //deep copy = parse + stringify (JSON)
 const copiedClient = JSON.parse(JSON.stringify(origClient));
@@ -189,7 +219,7 @@ console.log('orig client sum:', origClient.sum);
 
 console.log('cop client city:', copiedClient.address.city);     
 console.log('cop client sum:', copiedClient.sum);     
-console.log('\n');
+console.log("\n"); 
 
 //1.5 arrays -> accessor, iteration, mutator
 
@@ -200,29 +230,31 @@ console.log('\n');
 //concat = combine old + new clients
 const combClients = clients.concat(newClients);
 console.log('update list of clients -> ', combClients);
-console.log('\n');
+console.log("\n"); 
 
 //create a list and the names will be separated by ","
 const clientNames = clients.map(c => c.name);
 const namesString = clientNames.join(', ');
 console.log('list of the clients -> ', namesString);
-console.log('\n');
+console.log("\n"); 
 
 //"includes" returns boolean
 console.log('check if the name is in list -> ', clientNames.includes('Mircea Elena'));
 console.log('random name: ', clientNames.includes('John Cheese'), ', which is not in clients'); 
-console.log('\n');
+console.log("\n"); 
 
 //find the position/index of client from the list 
+//position of this client is 1 <=> clients[1], it begins from 0
 console.log('for a existing client', clientNames.indexOf('Dobre Mihai-Cristian')); 
+//will return -1 bc this client doesn't exist in db in "clients" (from the beginning)
 console.log('random name', clientNames.indexOf('John Cheese'));          
-console.log('\n');               
+console.log("\n");               
 
 //take some clients from a specific range
 //here take the first 2 -> (0, 2)
 const first2Clients = clients.slice(0, 2);
 console.log('wanted clients are: ', first2Clients);
-console.log('\n');
+console.log("\n");
 
 //2. iteration: from 1.1 -> map, filter, forEach etc.
 
@@ -231,24 +263,24 @@ console.log('\n');
 //add last
 clients.push({ name: 'Marinache Alexandru-Petru', nrProd: 3, sum: 120 });
 console.log('after push of client => ', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //delete last
 const lastClient = clients.pop();
 console.log('what client we remove LAST ->', lastClient.name);
 console.log('clients after "pop" => ', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //delete first
 const firstClient = clients.shift();
 console.log('what client we remove FIRST ->', firstClient.name);
 console.log('clients after "shift":', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //add first
 clients.unshift({ name: 'Baragan Marius', nrProd: 2, sum: 75 });
 console.log('after unshift an client =>', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //"splice" : remove or switch
 
@@ -256,12 +288,12 @@ console.log('\n');
 const removedClients = clients.splice(1, 1);
 console.log('after splice/removed =>', removedClients[0].name);
 console.log('clients [new list] => ', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //switch the client 0 with NOU CLIENT=...
 clients.splice(0, 1, { name: 'Nastase Ana-Maria', nrProd: 5, sum: 200 });
 console.log('after replace =>', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //i'll sort by the sum they used
 clients.sort((a, b) => a.sum - b.sum);
@@ -271,71 +303,80 @@ console.log('\n');
 //reverse order
 clients.reverse();
 console.log('reverse order of clients is', clients.map(c => c.name));
-console.log('\n');
+console.log("\n");
 
 //1.6 callback & promises
 
-function doSmthCB(callback) {
+//to find client by name and log if found w/ "cb"
+function findClientCB(name, callback) {
   setTimeout(() => {
-    console.log('task done as CALLBACK!');
-    callback();
+    const client = clients.find(c => c.name === name);
+    console.log("searching client by callback:", name);
+    callback(client);
   }, 1000);
 }
-console.log('\n');
-//after 1000
-doSmthCB(() => {
-  console.log('CALLBACK function executed!');
+//searching for a certain client
+findClientCB("Mircea Elena", (client) => {
+  if (client) {
+    console.log("client", client, "was found");
+  } else {
+    console.log("client not found");
+  }
 });
 
-function doSmthPromise() {
+//with "promise" check if client spent >= 200
+function checkClientSpending(name) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const success = true; 
-      if (success) {
-        resolve('task done as PROMISE!');
+      const client = clients.find(c => c.name === name);
+      if (client) {
+        if (client.sum > 200) {
+          resolve(`${name} spent ${client.sum} cash`);
+        } else {
+          reject(`${name} spent only ${client.sum} cash`);
+        }
       } else {
-        reject('task failed :( ');
+        reject(`client ${name} not found`);
       }
     }, 1000);
   });
 }
-console.log('\n');
 
-doSmthPromise()
-  .then(result => {
-    console.log(result);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-  console.log('\n');
+//check the client
+checkClientSpending("Dobre Mihai-Cristian")
+  .then(msg => console.log("promise -> msj ->", msg))
+  .catch(err => console.log("promise -> err ->", err));
+console.log("\n");
 
 //1.7 async & await
 
-//examples in sec
-
-function wait2Sec() {
-  return new Promise(resolve => {
+function getClientCity(name) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve("2 sec passed!");
+      const client = clients.find(c => c.name === name);
+      if (client) {
+        resolve(`${name} lives in ${client.address.city}`);
+      } else {
+        reject(`client ${name} not found`);
+      }
     }, 2000);
   });
 }
-//"async" always return Promise!
-async function asyncFunction() {
-  console.log("start!");
-  try {
-    //await <=> to finish Promise from async
-    const message = await wait2Sec();
-    console.log(message);
-  } catch (err) {
-    console.error(err);
-  }
-  console.log("finish =D");
-}
 
-asyncFunction();
-console.log('\n');
+async function showClientCity(name) {
+  console.log("getting address for client", name);
+  try {
+    const result = await getClientCity(name);
+    console.log("result from async ->", result);
+  } catch (err) {
+    console.error("err from async", err);
+  }
+  console.log("\n");
+}
+//2 tests: 1 succesed & 1 failed
+showClientCity("Ionescu Ana");
+showClientCity("Amarascu Radu"); 
+console.log("\n"); 
 
 //1.8 closure
 
@@ -350,12 +391,48 @@ function createGreetinginApp(greeting) {
 
 const sayHello = createGreetinginApp('hello');
 clients.forEach(sayHello);
-console.log('\n');
+console.log("\n"); 
 
 //1.9 useState & useRef => react
 
 //useState = counter, initial = 0
 
+/*
+import React, { useState } from 'react';
+
+function ClientCounter() {
+  const [clients, setClients] = useState(0);
+
+  const addClient = () => {
+    setClients(clients + 1);
+  };
+
+  return (
+    <div>
+      <p>number of clients registered is {clients}</p>
+      <button onClick={addClient}>Add client</button>
+    </div>
+  );
+}
+*/
+
 //useRef = input elem, change value from "null"
 
+/*
+import React, { useRef } from 'react';
 
+function LastClient() {
+  const lastClientName = useRef("");
+
+  const saveClient = (name) => {
+    lastClientName.current = name;
+    console.log("last client saved is", lastClientName.current);
+  };
+
+  return (
+    <div>
+      <button onClick={() => saveClient("Ionescu Ana")}>Save client</button>
+    </div>
+  );
+}
+*/
